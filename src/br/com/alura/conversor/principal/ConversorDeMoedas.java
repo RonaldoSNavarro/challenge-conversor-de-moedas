@@ -22,7 +22,7 @@ public class ConversorDeMoedas {
             System.out.println("7- Sair");
             System.out.print("Escolha uma opção: ");
             int opcao = scanner.nextInt();
-            scanner.nextLine();  // Consumir a nova linha
+            scanner.nextLine();
 
             if (opcao == 7) {
                 System.out.println("Saindo...");
@@ -65,7 +65,7 @@ public class ConversorDeMoedas {
 
                 System.out.print("Digite o valor a ser convertido: ");
                 double valor = scanner.nextDouble();
-                scanner.nextLine();  // Consumir a nova linha
+                scanner.nextLine();
 
                 double valorConvertido = conversao.converter(valor);
                 System.out.printf("Valor convertido: %.2f%n", valorConvertido);
