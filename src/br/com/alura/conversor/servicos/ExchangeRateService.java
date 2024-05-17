@@ -1,10 +1,12 @@
 package br.com.alura.conversor.servicos;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -13,17 +15,28 @@ public class ExchangeRateService {
     private static final String baseUrl = "https://v6.exchangerate-api.com/v6/";
 
     public double obterTaxaCambio(String moedaOrigem, String moedaDestino) throws IOException {
-        String url = baseUrl + apiKey + "/latest/" + moedaOrigem;
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).build();
+        String urlString = baseUrl + apiKey + "/latest/" + moedaOrigem;
+        URL url = new URL(urlString);
+        HttpURLConnection request = (HttpURLConnection) url.openConnection();
+        request.connect();
 
-        try {
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            String respondeBody = response.body();
-            JsonObject jsonObject = JsonParser.parseString(respondeBody).getAsJsonObject();
-            return jsonObject.getAsJsonObject("rates").get(moedaDestino).getAsDouble();
-        } catch (InterruptedException e) {
-            throw new IOException("Erro ao obter a taxa de câmbio", e);
+        JsonParser jp = new JsonParser();
+        JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent()));
+        JsonObject jsonobj = root.getAsJsonObject();
+
+        // Verificar o resultado da requisição
+        String reqResult = jsonobj.get("result").getAsString();
+        if (!reqResult.equals("success")) {
+            throw new IOException("Falha na requisição da API: " + reqResult);
         }
+
+        JsonObject ratesObject = jsonobj.getAsJsonObject("conversion_rates");
+
+        // Verificar se a taxa de câmbio para a moeda de destino está presente
+        if (!ratesObject.has(moedaDestino)) {
+            throw new IOException("Taxa de câmbio para " + moedaDestino + " não encontrada");
+        }
+
+        return ratesObject.get(moedaDestino).getAsDouble();
     }
 }
