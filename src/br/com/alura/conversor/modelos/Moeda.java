@@ -16,4 +16,9 @@ public class Moeda {
     public String getCodigo() {
         return codigo;
     }
+
+    @Override
+    public String toString() {
+        return nome + " (" + codigo + ")";
+    }
 }
