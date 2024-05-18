@@ -37,6 +37,13 @@ public class ExchangeRateService {
             throw new IOException("Taxa de câmbio para " + moedaDestino + " não encontrada");
         }
 
-        return ratesObject.get(moedaDestino).getAsDouble();
+        double taxa = ratesObject.get(moedaDestino).getAsDouble();
+
+        // Se a moeda de destino for USD, calcular a taxa inversa
+        if (moedaDestino.equals("USD") && !moedaOrigem.equals("USD")) {
+            taxa = 1.0 / taxa;
+        }
+
+        return taxa;
     }
 }
