@@ -11,7 +11,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 public class ExchangeRateService {
-    private static final String apiKey = "fe85bc8a8950311d1ff0e3a0";
+    private static final String apiKey = "sua_chave_aqui";
     private static final String baseUrl = "https://v6.exchangerate-api.com/v6/";
 
     public double obterTaxaCambio(String moedaOrigem, String moedaDestino) throws IOException {
