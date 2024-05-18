@@ -2,6 +2,8 @@
 
 # Conversor de Moedas
 
+![Badge](assets/Badge-conversor.png)
+
 Este é um simples aplicativo de linha de comando em Java para conversão de moedas. Ele permite que os usuários convertam entre diferentes moedas, como Dólar, Real Brasileiro, Peso Argentino e Peso Colombiano.
 
 ## Funcionalidades
