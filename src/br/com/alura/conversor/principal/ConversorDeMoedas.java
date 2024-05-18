@@ -12,14 +12,24 @@ public class ConversorDeMoedas {
         ExchangeRateService exchangeRateService = new ExchangeRateService();
 
         while (true) {
-            System.out.println("$$ Seja bem-vindo(a) ao Conversor de Moedas $$");
-            System.out.println("1- Dólar >> Peso argentino");
-            System.out.println("2- Peso argentino >> Dólar");
-            System.out.println("3- Dólar >> Real brasileiro");
-            System.out.println("4- Real brasileiro >> Dólar");
-            System.out.println("5- Dólar >> Peso colombiano");
-            System.out.println("6- Peso colombiano >> Dólar");
-            System.out.println("7- Sair");
+            String menu = """
+            
+            ****************************************************
+            
+            $$ Seja bem-vindo(a) ao Conversor de Moedas $$
+            
+            1- Dólar >> Peso argentino
+            2- Peso argentino >> Dólar
+            3- Dólar >> Real brasileiro
+            4- Real brasileiro >> Dólar
+            5- Dólar >> Peso colombiano
+            6- Peso colombiano >> Dólar
+            "7- Sair
+            
+            ****************************************************
+            
+            """;
+            System.out.println(menu);
             System.out.print("Escolha uma opção: ");
             int opcao = scanner.nextInt();
             scanner.nextLine();
@@ -29,8 +39,8 @@ public class ConversorDeMoedas {
                 break;
             }
 
-            Conversao conversao = null;
-            double taxaCambio = 0.0;
+            Conversao conversao;
+            double taxaCambio;
 
             try {
                 switch (opcao) {
@@ -68,6 +78,7 @@ public class ConversorDeMoedas {
                 scanner.nextLine();
 
                 double valorConvertido = conversao.converter(valor);
+                System.out.println("****************************************************");
                 System.out.printf("Valor convertido: %.2f%n", valorConvertido);
             } catch (IOException e) {
                 System.out.println("Erro ao obter a taxa de câmbio: " + e.getMessage());
